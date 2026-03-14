@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyroSync | Waste-to-Fuel Digital Reactor Simulator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+    <div class="glow-orb glow-1"></div>
+    <div class="glow-orb glow-2"></div>
+    <div class="glow-orb glow-3"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⚗️</span>
+                <span class="logo-text">PyroSync</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#simulator">Simulator</a></li>
+                <li><a href="#analytics">Analytics</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">🚀 Advanced AI-Powered Simulation</div>
+            <h1 class="hero-title">Waste-to-Fuel Digital Reactor</h1>
+            <p class="hero-subtitle">Transform industrial waste into sustainable energy with predictive catalytic pyrolysis modeling</p>
+            <button class="cta-button" onclick="document.getElementById('simulator').scrollIntoView({behavior: 'smooth'})">
+                Start Simulation
+                <span class="button-arrow">→</span>
+            </button>
+            <div class="hero-stats">
+                <div class="stat-box">
+                    <span class="stat-number">65%</span>
+                    <span class="stat-label">Avg Oil Yield</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">80%</span>
+                    <span class="stat-label">Carbon Reduction</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-number">Real-time</span>
+                    <span class="stat-label">AI Predictions</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="reactor-visual"></div>
+        </div>
+    </header>
+
+    <!-- Technology Section -->
+    <section class="about" id="technology">
+        <div class="section-wrapper">
+            <h2 class="section-title">How It Works</h2>
+            <div class="tech-grid">
+                <div class="tech-card">
+                    <div class="tech-icon">🔥</div>
+                    <h3>Thermal Decomposition</h3>
+                    <p>Advanced temperature modeling for optimal feedstock conversion</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">⚡</div>
+                    <h3>Catalyst Optimization</h3>
+                    <p>Intelligent loading algorithms for maximum yield efficiency</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">📊</div>
+                    <h3>Predictive Analytics</h3>
+                    <p>Real-time AI models forecasting product composition</p>
+                </div>
+                <div class="tech-card">
+                    <div class="tech-icon">♻️</div>
+                    <h3>Sustainability Focus</h3>
+                    <p>Carbon footprint tracking and environmental impact analysis</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" id="simulator">
+        <div class="section-wrapper">
+            <h2 class="section-title">Reactor Simulation Dashboard</h2>
+            <div class="dashboard-grid">
+                <!-- Input Panel -->
+                <div class="input-panel glass-card">
+                    <h3>Process Inputs</h3>
+                    <div class="input-group">
+                        <label>Feedstock Mass (kg)</label>
+                        <input type="number" id="feedstock" placeholder="Enter mass in kg" value="100">
+                        <div class="input-slider">
+                            <input type="range" id="feedstock-range" min="10" max="500" value="100" 
+                                   oninput="document.getElementById('feedstock').value = this.value">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Catalyst Loading (%)</label>
+                        <input type="number" id="catalyst" placeholder="0-20%" value="5">
+                        <div class="input-slider">
+                            <input type="range" id="catalyst-range" min="0" max="20" value="5" step="0.5"
+                                   oninput="document.getElementById('catalyst').value = this.value">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Reactor Temperature (°C)</label>
+                        <input type="number" id="temperature" placeholder="300-500°C" value="400">
+                        <div class="input-slider">
+                            <input type="range" id="temperature-range" min="300" max="500" value="400" step="10"
+                                   oninput="document.getElementById('temperature').value = this.value">
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <label>Reaction Time (min)</label>
+                        <input type="number" id="time" placeholder="Enter time in minutes" value="30">
+                        <div class="input-slider">
+                            <input type="range" id="time-range" min="5" max="120" value="30" step="5"
+                                   oninput="document.getElementById('time').value = this.value">
+                        </div>
+                    </div>
+                    <button class="run-button" onclick="calculateYield()">
+                        <span class="button-icon">▶</span> Run Simulation
+                    </button>
+                </div>
+
+                <!-- Results Cards -->
+                <div class="results-panel">
+                    <div class="results-grid">
+                        <div class="card green-card">
+                            <div class="card-header">
+                                <h3>Oil Yield</h3>
+                                <span class="card-icon">🛢️</span>
+                            </div>
+                            <p class="card-value" id="oil">-</p>
+                            <p class="card-unit">kilograms</p>
+                        </div>
+                        <div class="card orange-card">
+                            <div class="card-header">
+                                <h3>Gas Yield</h3>
+                                <span class="card-icon">💨</span>
+                            </div>
+                            <p class="card-value" id="gas">-</p>
+                            <p class="card-unit">kilograms</p>
+                        </div>
+                        <div class="card gray-card">
+                            <div class="card-header">
+                                <h3>Biochar</h3>
+                                <span class="card-icon">⚫</span>
+                            </div>
+                            <p class="card-value" id="char">-</p>
+                            <p class="card-unit">kilograms</p>
+                        </div>
+                        <div class="card blue-card">
+                            <div class="card-header">
+                                <h3>Conversion %</h3>
+                                <span class="card-icon">📈</span>
+                            </div>
+                            <p class="card-value" id="conversion">-</p>
+                            <p class="card-unit">efficiency rate</p>
+                        </div>
+                        <div class="card purple-card">
+                            <div class="card-header">
+                                <h3>Carbon Reduction</h3>
+                                <span class="card-icon">🌍</span>
+                            </div>
+                            <p class="card-value" id="carbon">-</p>
+                            <p class="card-unit">CO₂ avoided</p>
+                        </div>
+                        <div class="card gold-card">
+                            <div class="card-header">
+                                <h3>Profit</h3>
+                                <span class="card-icon">💰</span>
+                            </div>
+                            <p class="card-value" id="profit">-</p>
+                            <p class="card-unit">Indian Rupees</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Section -->
+    <section class="graphs" id="analytics">
+        <div class="section-wrapper">
+            <h2 class="section-title">Reactor Performance Analysis</h2>
+            <div class="charts-container">
+                <div class="chart-box glass-card">
+                    <h3 class="chart-title">Yield Distribution Over Reaction Time</h3>
+                    <canvas id="timeChart"></canvas>
+                </div>
+                <div class="chart-box glass-card">
+                    <h3 class="chart-title">Temperature Optimization Profile</h3>
+                    <canvas id="optChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="section-wrapper">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>PyroSync</h4>
+                    <p>Advanced digital twin platform for waste-to-energy reactor design and optimization</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Technology</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>Email: info@pyrosync.dev</p>
+                    <p>© 2024 PyroSync. All rights reserved.</p>
+                </div>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-tagline">Transforming waste into wealth through AI-powered pyrolysis</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="optimization.js"></script>
+</body>
+</html>
